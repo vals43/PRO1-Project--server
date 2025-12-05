@@ -1,4 +1,4 @@
-package PRO1.server.Repositories;
+package PRO1.server.Repository;
 
 import PRO1.server.Model.Habits;
 import PRO1.server.Model.Users;

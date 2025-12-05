@@ -1,7 +1,7 @@
 package PRO1.server.Controller;
 
 import PRO1.server.Model.Users;
-import PRO1.server.Repositories.UserRepository;
+import PRO1.server.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
