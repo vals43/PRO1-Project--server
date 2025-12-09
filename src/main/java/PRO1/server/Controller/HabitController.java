@@ -18,7 +18,10 @@ public class HabitController {
         this.service = service;
     }
 
-
+    @GetMapping("/")
+    public String HelloWorld(){
+        return "Habit work ";
+    }
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<HabitResponse>> getAll(@PathVariable int userId) {
         return ResponseEntity.ok(service.getHabits(userId));

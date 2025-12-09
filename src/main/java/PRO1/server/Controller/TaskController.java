@@ -9,15 +9,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/task")
-@CrossOrigin("*")
-public class TaskController {
+public class  TaskController {
 
     private final TaskService service;
 
     public TaskController(TaskService service) {
         this.service = service;
     }
-
+    @GetMapping("/")
+    public String HelloWorld(){
+        return "Task Work ";
+    }
     @PostMapping("/create")
     public TaskResponse create(@RequestBody TaskRequest request) {
         return service.create(request);

@@ -1,0 +1,373 @@
+openapi: "3.1.0"
+info:
+  title: "server API"
+  description: "server API"
+  version: "1.0.0"
+servers:
+  - url: "http://localhost:8080"
+paths:
+  /:
+    get:
+      summary: "GET "
+      operationId: "HelloWorld"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /user/add:
+    post:
+      summary: "POST user/add"
+      operationId: "addUser"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Users"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Users"
+  /user/all:
+    get:
+      summary: "GET user/all"
+      operationId: "getAllUsers"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Users"
+  /user/del/{id}:
+    delete:
+      summary: "DELETE user/del/{id}"
+      operationId: "deleteUser"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "OK"
+  /user/id/{id}:
+    get:
+      summary: "GET user/id/{id}"
+      operationId: "getUserById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Users"
+  /habit/create:
+    post:
+      summary: "POST habit/create"
+      operationId: "create"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HabitRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/HabitResponse"
+  /habit/delete/{id}:
+    delete:
+      summary: "DELETE habit/delete/{id}"
+      operationId: "delete"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /habit/update/{id}:
+    put:
+      summary: "PUT habit/update/{id}"
+      operationId: "update"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HabitRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/HabitResponse"
+  /habit/user/{userId}:
+    get:
+      summary: "GET habit/user/{userId}"
+      operationId: "getAll"
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/HabitResponse"
+  /habit/{id}:
+    get:
+      summary: "GET habit/{id}"
+      operationId: "getOne"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/HabitResponse"
+  /task/create:
+    post:
+      summary: "POST task/create"
+      operationId: "create"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TaskResponse"
+  /task/user/{userId}:
+    get:
+      summary: "GET task/user/{userId}"
+      operationId: "getAll"
+      parameters:
+        - name: "userId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/TaskResponse"
+  /task/{taskId}:
+    delete:
+      summary: "DELETE task/{taskId}"
+      operationId: "delete"
+      parameters:
+        - name: "taskId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /task/{taskId}/toggle:
+    patch:
+      summary: "PATCH task/{taskId}/toggle"
+      operationId: "toggle"
+      parameters:
+        - name: "taskId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TaskResponse"
+components:
+  schemas:
+    Users:
+      type: "object"
+      properties:
+        user_id:
+          type: "integer"
+          format: "int32"
+          nullable: true
+        name:
+          type: "string"
+          nullable: true
+        last_name:
+          type: "string"
+          nullable: true
+        email:
+          type: "string"
+          nullable: true
+        password:
+          type: "string"
+          nullable: true
+    HabitRequest:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          nullable: true
+        frequency:
+          type: "string"
+          nullable: true
+          enum:
+            - "daily"
+            - "weekly"
+            - "monthly"
+        userId:
+          type: "integer"
+          format: "int32"
+          nullable: true
+    HabitResponse:
+      type: "object"
+      properties:
+        habitId:
+          type: "integer"
+          format: "int32"
+          nullable: true
+        name:
+          type: "string"
+          nullable: true
+        frequency:
+          type: "string"
+          nullable: true
+          enum:
+            - "daily"
+            - "weekly"
+            - "monthly"
+        createdAt:
+          type: "string"
+          format: "date-time"
+          nullable: true
+        userId:
+          type: "integer"
+          format: "int32"
+          nullable: true
+    TaskRequest:
+      type: "object"
+      properties:
+        title:
+          type: "string"
+          nullable: true
+        description:
+          type: "string"
+          nullable: true
+        priority:
+          type: "string"
+          nullable: true
+          enum:
+            - "LOW"
+            - "MEDIUM"
+            - "HIGH"
+        dueDate:
+          type: "string"
+          format: "date"
+          nullable: true
+        userId:
+          type: "integer"
+          format: "int32"
+          nullable: true
+    TaskResponse:
+      type: "object"
+      properties:
+        taskId:
+          type: "integer"
+          format: "int32"
+          nullable: true
+        title:
+          type: "string"
+          nullable: true
+        description:
+          type: "string"
+          nullable: true
+        priority:
+          type: "string"
+          nullable: true
+          enum:
+            - "LOW"
+            - "MEDIUM"
+            - "HIGH"
+        completed:
+          type: "boolean"
+          nullable: true
+        dueDate:
+          type: "string"
+          format: "date"
+          nullable: true
+        createdAt:
+          type: "string"
+          format: "date-time"
+          nullable: true
+        userId:
+          type: "integer"
+          format: "int32"
+          nullable: true

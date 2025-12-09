@@ -16,7 +16,8 @@ public class Habit {
     @Column(name = "name", nullable = false, length = 150)
     private String name;
 
-    @Column(name = "frequency", length = 20)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name = "frequency", length = 20)
     private Frequency frequency;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
