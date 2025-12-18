@@ -5,10 +5,14 @@ import PRO1.server.DTO.RegisterRequest;
 import PRO1.server.Model.User;
 import PRO1.server.Repository.UserRepository;
 import PRO1.server.Service.UserService;
+import PRO1.server.web.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -22,22 +26,27 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserService userService;
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        // 1. Chercher l'utilisateur par email
         return userRepository.findByEmail(request.getEmail())
                 .map(user -> {
-                    // 2. Vérifier si le mot de passe correspond
                     if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-                        // Ici, on retourne l'utilisateur (ou un token JWT plus tard)
-                        return ResponseEntity.ok(user);
-                    } else {
-                        return ResponseEntity.status(401).body("Mot de passe incorrect");
+                        String token = jwtUtils.generateToken(user.getEmail());
+
+                        Map<String, String> response = new HashMap<>();
+                        response.put("token", token);
+                        response.put("name", user.getName());
+
+                        return ResponseEntity.ok(response);
                     }
+                    return ResponseEntity.status(401).body("Identifiants invalides");
                 })
                 .orElse(ResponseEntity.status(404).body("Utilisateur non trouvé"));
     }
+    @PostMapping("/register")
         public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
             try {
                 User savedUser = userService.registerNewUser(request);
