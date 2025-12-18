@@ -40,7 +40,7 @@ public class HabitLogService {
     }
 
     public List<HabitLogResponse> getLogsByHabitId(Long habitId) {
-        return habitLogRepository.findByHabit_Id(habitId)
+        return habitLogRepository.findByHabit_Id(Math.toIntExact(habitId))
                 .stream()
                 .map(log -> new HabitLogResponse(
                         log.getLogId(),

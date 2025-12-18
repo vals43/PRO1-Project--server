@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "Users")
-public class Users {
+public class User {
    @Id
    @Column(name = "user_id" , nullable = false , unique = true , length = 20)
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +25,11 @@ public class Users {
    @Column(name = "password")
    private String password ;
 
-   public Users() {
+   public User() {
 
    }
 
-   public Users(String name, String last_name, String email, String password) {
+   public User(String name, String last_name, String email, String password) {
       this.name = name;
       this.last_name = last_name;
       this.email = email;
@@ -48,7 +48,7 @@ public class Users {
       return email;
    }
 
-   public String getLast_name() {
+   public String getLast_name(String lastName) {
       return last_name;
    }
 
@@ -79,15 +79,14 @@ public class Users {
               ", name='" + name + '\'' +
               ", last_name='" + last_name + '\'' +
               ", email='" + email + '\'' +
-              ", password='" + password + '\'' +
               '}';
    }
 
    @Override
    public boolean equals(Object o) {
       if (o == null || getClass() != o.getClass()) return false;
-      Users users = (Users) o;
-      return user_id == users.user_id && Objects.equals(name, users.name) && Objects.equals(last_name, users.last_name) && Objects.equals(email, users.email) && Objects.equals(password, users.password);
+      User user = (User) o;
+      return user_id == user.user_id && Objects.equals(name, user.name) && Objects.equals(last_name, user.last_name) && Objects.equals(email, user.email) && Objects.equals(password, user.password);
    }
 
    @Override

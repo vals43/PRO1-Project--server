@@ -3,11 +3,11 @@ package PRO1.server.Mapper;
 import PRO1.server.DTO.TaskRequest;
 import PRO1.server.DTO.TaskResponse;
 import PRO1.server.Model.Task;
-import PRO1.server.Model.Users;
+import PRO1.server.Model.User;
 
 public class TaskMapper {
 
-    public static Task toEntity(TaskRequest req, Users user) {
+    public static Task toEntity(TaskRequest req, User user) {
         Task task = new Task(
                 req.title(),
                 req.description(),

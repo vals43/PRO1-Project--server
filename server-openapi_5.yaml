@@ -4,7 +4,7 @@ info:
   description: "server API"
   version: "1.0.0"
 servers:
-  - url: "http://localhost:8080"
+  - url: "https://server"
 paths:
   /:
     get:
@@ -17,68 +17,6 @@ paths:
             '*/*':
               schema:
                 type: "string"
-  /user/add:
-    post:
-      summary: "POST user/add"
-      operationId: "addUser"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Users"
-        required: true
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/Users"
-  /user/all:
-    get:
-      summary: "GET user/all"
-      operationId: "getAllUsers"
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                type: "array"
-                items:
-                  $ref: "#/components/schemas/Users"
-  /user/del/{id}:
-    delete:
-      summary: "DELETE user/del/{id}"
-      operationId: "deleteUser"
-      parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "integer"
-            format: "int32"
-      responses:
-        "200":
-          description: "OK"
-  /user/id/{id}:
-    get:
-      summary: "GET user/id/{id}"
-      operationId: "getUserById"
-      parameters:
-        - name: "id"
-          in: "path"
-          required: true
-          schema:
-            type: "integer"
-            format: "int32"
-      responses:
-        "200":
-          description: "OK"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/Users"
   /habit/create:
     post:
       summary: "POST habit/create"
@@ -249,9 +187,164 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/TaskResponse"
+  /user/add:
+    post:
+      summary: "POST user/add"
+      operationId: "addUser"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/User"
+  /user/all:
+    get:
+      summary: "GET user/all"
+      operationId: "getAllUsers"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/User"
+  /user/del/{id}:
+    delete:
+      summary: "DELETE user/del/{id}"
+      operationId: "deleteUser"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "OK"
+  /user/id/{id}:
+    get:
+      summary: "GET user/id/{id}"
+      operationId: "getUserById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int32"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/User"
+  /habit/:
+    get:
+      summary: "GET habit/"
+      operationId: "HelloWorld"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /task/:
+    get:
+      summary: "GET task/"
+      operationId: "HelloWorld"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+  /habit/log:
+    post:
+      summary: "POST habit/log"
+      operationId: "createLog"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HabitLogRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/HabitLogResponse"
+  /habit/log/{habitId}:
+    get:
+      summary: "GET habit/log/{habitId}"
+      operationId: "getLogs"
+      parameters:
+        - name: "habitId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/HabitLogResponse"
+  /api/auth/login:
+    post:
+      summary: "POST api/auth/login"
+      operationId: "login"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+  /api/auth/register:
+    post:
+      summary: "POST api/auth/register"
+      operationId: "register"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "object"
 components:
   schemas:
-    Users:
+    User:
       type: "object"
       properties:
         user_id:
@@ -287,6 +380,24 @@ components:
           type: "integer"
           format: "int32"
           nullable: true
+    HabitLogResponse:
+      type: "object"
+      properties:
+        logId:
+          type: "integer"
+          format: "int64"
+          nullable: true
+        habitId:
+          type: "integer"
+          format: "int64"
+          nullable: true
+        completed:
+          type: "boolean"
+          nullable: true
+        logDate:
+          type: "string"
+          format: "date"
+          nullable: true
     HabitResponse:
       type: "object"
       properties:
@@ -312,6 +423,11 @@ components:
           type: "integer"
           format: "int32"
           nullable: true
+        logs:
+          type: "array"
+          nullable: true
+          items:
+            $ref: "#/components/schemas/HabitLogResponse"
     TaskRequest:
       type: "object"
       properties:
@@ -325,9 +441,9 @@ components:
           type: "string"
           nullable: true
           enum:
-            - "LOW"
-            - "MEDIUM"
-            - "HIGH"
+            - "low"
+            - "medium"
+            - "high"
         dueDate:
           type: "string"
           format: "date"
@@ -353,9 +469,9 @@ components:
           type: "string"
           nullable: true
           enum:
-            - "LOW"
-            - "MEDIUM"
-            - "HIGH"
+            - "low"
+            - "medium"
+            - "high"
         completed:
           type: "boolean"
           nullable: true
@@ -370,4 +486,38 @@ components:
         userId:
           type: "integer"
           format: "int32"
+          nullable: true
+    HabitLogRequest:
+      type: "object"
+      properties:
+        habitId:
+          type: "integer"
+          format: "int64"
+          nullable: true
+        completed:
+          type: "boolean"
+          nullable: true
+    LoginRequest:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+          nullable: true
+        password:
+          type: "string"
+          nullable: true
+    RegisterRequest:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          nullable: true
+        last_name:
+          type: "string"
+          nullable: true
+        email:
+          type: "string"
+          nullable: true
+        password:
+          type: "string"
           nullable: true

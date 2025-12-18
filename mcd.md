@@ -1,7 +1,7 @@
 
 ---
 
-# 🛠️ **PostgreSQL Schema (English version)**
+# 🛠️ **PostgreSQL Schema **
 
 ```sql
 -- ==========================
@@ -56,12 +56,12 @@ CREATE TABLE task (
 
 ---
 
-# 🌱 **Inserts (translated)**
+# 🌱 **Inserts**
 
 ### 👤 **Users**
 
 ```sql
-INSERT INTO users (email, password, avatar_url) VALUES
+INSERT INTO user (email, password, avatar_url) VALUES
 ('alice@example.com', 'hashedpassword1', NULL),
 ('bob@example.com', 'hashedpassword2', 'https://cdn.site/avatar_bob.png');
 ```

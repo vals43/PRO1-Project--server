@@ -4,7 +4,7 @@ import PRO1.server.DTO.HabitRequest;
 import PRO1.server.DTO.HabitResponse;
 import PRO1.server.Mapper.HabitMapper;
 import PRO1.server.Model.Habit;
-import PRO1.server.Model.Users;
+import PRO1.server.Model.User;
 import PRO1.server.Repository.HabitsRepository;
 import PRO1.server.Repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class HabitService {
 
 
     public List<HabitResponse> getHabits(int userId) {
-        Users user = userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         return habitsRepository.findByUser(user)
@@ -46,7 +46,7 @@ public class HabitService {
 
 
     public HabitResponse createHabit(HabitRequest request) {
-        Users user = userRepository.findById(request.userId())
+        User user = userRepository.findById(request.userId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Habit habit = HabitMapper.toEntity(request, user);

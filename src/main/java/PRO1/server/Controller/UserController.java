@@ -1,8 +1,12 @@
 package PRO1.server.Controller;
 
-import PRO1.server.Model.Users;
+import PRO1.server.DTO.RegisterRequest;
+import PRO1.server.Model.User;
 import PRO1.server.Repository.UserRepository;
+import PRO1.server.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,20 +17,24 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/all")
-    public List<Users> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     @GetMapping("/id/{id}")
-    public Users getUserById(@PathVariable int id) {
+    public User getUserById(@PathVariable int id) {
         return userRepository.getReferenceById(id);
     }
 
     @PostMapping("/add")
-    public Users addUser(@RequestBody Users user) {
-        return userRepository.save(user);
+    public User addUser(@RequestBody RegisterRequest request) {
+        return userService.registerNewUser(request);
     }
 
 
@@ -34,6 +42,5 @@ public class UserController {
     public void deleteUser(@PathVariable int id) {
         userRepository.deleteById(id);
     }
-
 
 }

@@ -26,7 +26,7 @@ public class Habit {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "user_id")
-    private Users user;
+    private User user;
 
     @OneToMany(mappedBy = "habit", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HabitLog> logs;
@@ -34,7 +34,7 @@ public class Habit {
     public Habit() {
     }
 
-    public Habit(String name, Frequency frequency, Users user) {
+    public Habit(String name, Frequency frequency, User user) {
         this.name = name;
         this.frequency = frequency;
         this.user = user;
@@ -57,7 +57,7 @@ public class Habit {
         return createdAt;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return user;
     }
 
@@ -69,7 +69,7 @@ public class Habit {
         this.frequency = frequency;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

@@ -38,13 +38,13 @@ public class Task {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "user_id")
-    private Users user;
+    private User user;
 
     // --- Constructors ---
     public Task() {
     }
 
-    public Task(String title, String description, Priority priority, LocalDate dueDate, Users user) {
+    public Task(String title, String description, Priority priority, LocalDate dueDate, User user) {
         this.title = title;
         this.description = description;
         this.priority = priority;
@@ -83,7 +83,7 @@ public class Task {
         return dueDate;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return user;
     }
 
@@ -108,7 +108,7 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

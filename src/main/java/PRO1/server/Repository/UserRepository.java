@@ -1,7 +1,14 @@
 package PRO1.server.Repository;
 
-import PRO1.server.Model.Users;
+import PRO1.server.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<Users, Integer> {
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Integer> {
+
+    Optional<User> findByEmail(String email);
+
+    boolean existsByEmail(String email);
+
 }

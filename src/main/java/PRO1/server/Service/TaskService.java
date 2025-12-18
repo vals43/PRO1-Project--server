@@ -4,7 +4,7 @@ import PRO1.server.DTO.TaskRequest;
 import PRO1.server.DTO.TaskResponse;
 import PRO1.server.Mapper.TaskMapper;
 import PRO1.server.Model.Task;
-import PRO1.server.Model.Users;
+import PRO1.server.Model.User;
 import PRO1.server.Repository.TaskRepository;
 import PRO1.server.Repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class TaskService {
     }
 
     public TaskResponse create(TaskRequest request) {
-        Users user = usersRepository.findById(request.userId())
+        User user = usersRepository.findById(request.userId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Task task = TaskMapper.toEntity(request, user);
@@ -34,7 +34,7 @@ public class TaskService {
     }
 
     public List<TaskResponse> getAllForUser(int userId) {
-        Users user = usersRepository.findById(userId)
+        User user = usersRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         return taskRepository.findByUser(user)
