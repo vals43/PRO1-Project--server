@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/task")
+@CrossOrigin(origins = "http://localhost:5173")
 public class  TaskController {
 
     private final TaskService service;
@@ -34,7 +35,10 @@ public class  TaskController {
     public TaskResponse toggle(@PathVariable int taskId) {
         return service.toggleCompleted(taskId);
     }
-
+    @PutMapping("/{taskId}")
+    public TaskResponse update(@PathVariable int taskId, @RequestBody TaskRequest request) {
+        return service.update(taskId, request);
+    }
     @DeleteMapping("/{taskId}")
     public String delete(@PathVariable int taskId) {
         service.delete(taskId);

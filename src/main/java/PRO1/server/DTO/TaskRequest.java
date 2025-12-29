@@ -9,4 +9,29 @@ public record TaskRequest(
         Priority priority,
         LocalDate dueDate,
         int userId
-) {}
+) {
+    @Override
+    public String title() {
+        return title;
+    }
+
+    @Override
+    public String description() {
+        return description;
+    }
+
+    @Override
+    public Priority priority() {
+        return priority;
+    }
+
+    @Override
+    public LocalDate dueDate() {
+        return dueDate;
+    }
+
+    @Override
+    public int userId() {
+        return userId;
+    }
+}

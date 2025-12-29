@@ -51,7 +51,21 @@ public class TaskService {
 
         return TaskMapper.toResponse(taskRepository.save(task));
     }
+    public TaskResponse update(int taskId, TaskRequest request) {
+        // 1. Trouver la tâche existante
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found with id: " + taskId));
 
+        // 2. Mettre à jour les champs
+        task.setTitle(request.title());
+        task.setDescription(request.description());
+        task.setPriority(request.priority());
+        task.setDueDate(request.dueDate());
+
+        // 3. Sauvegarder et retourner la réponse
+        Task updatedTask = taskRepository.save(task);
+        return TaskMapper.toResponse(updatedTask);
+    }
     public void delete(int taskId) {
         taskRepository.deleteById(taskId);
     }
