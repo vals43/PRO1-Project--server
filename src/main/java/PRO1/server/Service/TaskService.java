@@ -52,7 +52,7 @@ public class TaskService {
         return TaskMapper.toResponse(taskRepository.save(task));
     }
     public TaskResponse update(int taskId, TaskRequest request) {
-        // 1. Trouver la tâche existante
+        // 1. Trouver la tâche existante²
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("Task not found with id: " + taskId));
 
