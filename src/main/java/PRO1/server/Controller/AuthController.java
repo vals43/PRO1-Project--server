@@ -48,12 +48,22 @@ public class AuthController {
                 .orElse(ResponseEntity.status(404).body("Utilisateur non trouvé"));
     }
     @PostMapping("/register")
-        public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-            try {
-                User savedUser = userService.registerNewUser(request);
-                return ResponseEntity.ok("Compte créé avec succès pour " + savedUser.getEmail());
-            } catch (RuntimeException e) {
-                return ResponseEntity.badRequest().body(e.getMessage());
-            }
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+        try {
+            User savedUser = userService.registerNewUser(request);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("user", savedUser);
+            response.put("message", "Compte créé avec succès");
+
+            return ResponseEntity.ok(response);
+
+        } catch (RuntimeException e) {
+            // Erreur -> renvoie message d'erreur en JSON
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
         }
+    }
+
 }
