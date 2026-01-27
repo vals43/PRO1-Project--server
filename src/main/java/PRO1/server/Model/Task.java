@@ -122,7 +122,7 @@ public class Task {
                 ", completed=" + completed +
                 ", dueDate=" + dueDate +
                 ", createdAt=" + createdAt +
-                ", user=" + (user != null ? user.getUser_id() : null) +
+                ", user=" + (user != null ? user.getId() : null) +
                 '}';
     }
 }

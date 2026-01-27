@@ -27,7 +27,7 @@ public class TaskMapper {
                 task.isCompleted(),
                 task.getDueDate(),
                 task.getCreatedAt(),
-                task.getUser().getUser_id()
+                task.getUser().getId()
         );
     }
 }

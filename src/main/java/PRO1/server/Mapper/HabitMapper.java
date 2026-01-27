@@ -22,7 +22,7 @@ public class HabitMapper {
                 habit.getName(),
                 habit.getFrequency(),
                 habit.getCreatedAt(),
-                habit.getUser().getUser_id(),
+                habit.getUser().getId(),
                 habit.getLogs() == null ? List.of() : habit.getLogs()
                         .stream()
                         .map(HabitLogMapper::toDTO)

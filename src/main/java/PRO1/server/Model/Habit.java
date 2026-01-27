@@ -84,7 +84,7 @@ public class Habit {
                 ", name='" + name + '\'' +
                 ", frequency='" + frequency + '\'' +
                 ", createdAt=" + createdAt +
-                ", user=" + (user != null ? user.getUser_id() : null) +
+                ", user=" + (user != null ? user.getId() : null) +
                 '}';
     }
 

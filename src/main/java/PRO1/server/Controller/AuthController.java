@@ -7,6 +7,7 @@ import PRO1.server.Repository.UserRepository;
 import PRO1.server.Service.UserService;
 import PRO1.server.web.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +21,14 @@ import java.util.Map;
 public class AuthController {
 
     @Autowired
-    private UserRepository userRepository; // Instance injectée
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private JwtUtils jwtUtils;
 
@@ -36,10 +39,10 @@ public class AuthController {
                     if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
                         String token = jwtUtils.generateToken(user.getEmail());
 
-                        Map<String, String> response = new HashMap<>();
+                        Map<String, Object> response = new HashMap<>();
                         response.put("token", token);
                         response.put("name", user.getName());
-                        response.put("id" , String.valueOf(user.getUser_id()));
+                        response.put("id", user.getId()); // Correction ici : getId()
 
                         return ResponseEntity.ok(response);
                     }
@@ -56,14 +59,12 @@ public class AuthController {
             response.put("user", savedUser);
             response.put("message", "Compte créé avec succès");
 
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
         } catch (RuntimeException e) {
-            // Erreur -> renvoie message d'erreur en JSON
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(errorResponse);
         }
     }
-
 }

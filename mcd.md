@@ -7,12 +7,12 @@
 -- ==========================
 -- TABLE User
 -- ==========================
-CREATE TABLE Users (
+CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     name VARCHAR(100),
     last_name VARCHAR(100),
     email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
 );
 
 -- ==========================
@@ -61,9 +61,10 @@ CREATE TABLE task (
 ### 👤 **Users**
 
 ```sql
-INSERT INTO user (email, password, avatar_url) VALUES
-('alice@example.com', 'hashedpassword1', NULL),
-('bob@example.com', 'hashedpassword2', 'https://cdn.site/avatar_bob.png');
+INSERT INTO habit (name, frequency, user_id) VALUES
+('Méditation', 'daily', 1),
+('Sport (Salle)', 'weekly', 1),
+('Lecture', 'daily', 1);
 ```
 
 ---
